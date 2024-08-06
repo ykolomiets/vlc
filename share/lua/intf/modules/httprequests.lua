@@ -157,6 +157,14 @@ processcommands = function ()
         common.snapshot()
     elseif command == "volume" then
         common.volume(val)
+    elseif command == "cycle_aout_device" then
+        if vlc.audio then
+            vlc.audio.cycle_device()
+        end
+    elseif command == "set_aout_device" then
+        if vlc.audio then
+            vlc.audio.set_device(val)
+        end
     elseif command == "seek" then
         common.seek(val)
     elseif command == "key" then
@@ -470,6 +478,7 @@ getstatus = function (includecategories)
     s.apiversion=3
     s.version=vlc.misc.version()
     s.volume=vlc.volume.get()
+    s.aoutdevices=vlc.audio.get_devices_list()
     s.seek_sec = vlc.config.get("short-jump-size")
 
     if input then

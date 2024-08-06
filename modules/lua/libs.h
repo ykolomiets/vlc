@@ -39,6 +39,7 @@ void luaopen_stream( lua_State * );
 void luaopen_strings( lua_State * );
 void luaopen_variables( lua_State * );
 void luaopen_video( lua_State * );
+void luaopen_audio( lua_State * );
 void luaopen_vlm( lua_State * );
 void luaopen_volume( lua_State * );
 void luaopen_gettext( lua_State * );

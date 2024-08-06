@@ -272,6 +272,7 @@ static int Start_LuaIntf( vlc_object_t *p_this, const char *name )
     luaopen_strings( L );
     luaopen_variables( L );
     luaopen_video( L );
+    luaopen_audio( L );
     luaopen_vlm( L );
     luaopen_volume( L );
     luaopen_gettext( L );
