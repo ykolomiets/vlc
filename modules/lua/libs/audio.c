@@ -115,7 +115,7 @@ static int vlclua_audio_get_devices_list( lua_State *L )
         if ( !strcmp(devstr, ids[i]) )
         {
             lua_pushboolean( L, true );
-            lua_setfield( L, -2, "active" );
+            lua_setfield( L, -2, "selected" );
         }
         lua_rawseti( L, -2, i+1 );
     }

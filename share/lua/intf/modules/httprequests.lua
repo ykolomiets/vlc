@@ -66,6 +66,26 @@ function strsplit(text, delimiter)
 end
 httprequests.strsplit = strsplit
 
+--Zip arrays to one array of tables, usage zip_arrays(arr1, fieldname1, arr2, fieldname2, ...)
+function zip_arrays(...)
+    local args = {...}
+    local result = {}
+
+    for i = 1, #args, 2 do
+        local arr = args[i]
+        local fieldName = args[i + 1]
+
+        for j = 1, #arr do
+            if not result[j] then
+                result[j] = {}
+            end
+            result[j][fieldName] = arr[j]
+        end
+    end
+
+    return result
+end
+
 --main function to process commands sent with the request
 
 processcommands = function ()
@@ -488,6 +508,24 @@ getstatus = function (includecategories)
         s.audiodelay=vlc.var.get(input,"audio-delay") / 1000000
         s.rate=vlc.var.get(input,"rate")
         s.subtitledelay=vlc.var.get(input,"spu-delay") / 1000000
+
+        local atrack=vlc.var.get(input,"audio-es")
+        local atrackids,atracktitles = vlc.var.get_list(input,"audio-es")
+        s.audiotracks=zip_arrays(atrackids, "id", atracktitles, "title")
+        for _, value in ipairs(s.audiotracks) do
+          if value.id==atrack then
+            value.selected=true
+          end
+        end
+
+        local strack=vlc.var.get(input,"spu-es")
+        local strackids,stracktitles = vlc.var.get_list(input,"spu-es")
+        s.subtitletracks=zip_arrays(strackids, "id", stracktitles, "title")
+        for _, value in ipairs(s.subtitletracks) do
+          if value.id==strack then
+            value.selected=true
+          end
+        end
     else
         s.time=0
         s.position=0
